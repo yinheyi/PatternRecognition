@@ -1,82 +1,102 @@
 %=============================================================================
-%ÎªÁË²âÊÔ¼òµ¥¶ø½¨
-%ÏÂÃæ½¨Á¢ÁËÒ»¸ö½á¹¹ÌåÓÃÓÚ´æ·ÅĞèÒªÓÃµÄµ½±äÁ¿£»
+%ä¸ºäº†æµ‹è¯•ç®€å•è€Œå»º
+%ä¸‹é¢å»ºç«‹äº†ä¸€ä¸ªç»“æ„ä½“ç”¨äºå­˜æ”¾éœ€è¦ç”¨çš„åˆ°å˜é‡ï¼›
 
-%´ò¿ªGPU²¢ĞĞ´¦Àí
-matlabpool open;
+%æ‰“å¼€GPUå¹¶è¡Œå¤„ç†
+%matlabpool open;
 options = struct('trainfcn',{'trainb','traincgb','traincgf','traincgp',...
-                              'traingd','traingda','traingdm','traingdx','trainoss',...
-                              'trainrp','trains','trainc','trainlm','trainr','trainbr','trainbfg'});
+                              'traingd','traingda','traingdm','traingdx',...
+                              'trainoss', 'trainrp','trains','trainlm', ...
+                              'trainc','trainr','trainbr','trainbfg'},...
+                  'goal',{0.01,0.01,0.01,0.01,...
+                         0.01,0.01,0.01,0.01,...
+                         0.01,0.01,0.01,0.01,...
+                         0.01,0.01,0.01,0.01});
 
-%¹¹½¨Ò»¸öÔª°ûÊı×é£¬°ÑÉÏÃæµÄ½á¹¹Ìå×é·Å½øÔª°ûÊı×éÖĞ£¬·½±ãÓÃÓÚ±äÁ¿µÄÑ­»·£»
+%æ„å»ºä¸€ä¸ªå…ƒèƒæ•°ç»„ï¼ŒæŠŠä¸Šé¢çš„ç»“æ„ä½“ç»„æ”¾è¿›å…ƒèƒæ•°ç»„ä¸­ï¼Œæ–¹ä¾¿ç”¨äºå˜é‡çš„å¾ªç¯ï¼›
 cell = {options(1),options(2),options(3),options(4),options(5),...
         options(6),options(7),options(8),options(9),options(10),...
         options(11),options(12),options(13),options(14),options(15),...
         options(16)};
-string1 = '±¾´Î²âÊÔËùÓÃµÄÑµÁ·º¯ÊıÎª£º';
-string2 = 'ÒÔÏÂ²âÊÔµÄÒşº¬²ãµÄÉñ¾­ÔªµÄÊıÄ¿ÊÇ£º';
-for i = 1:1:16
+string1 = 'æœ¬æ¬¡æµ‹è¯•æ‰€ç”¨çš„è®­ç»ƒå‡½æ•°ä¸ºï¼š';
+string2 = 'ä»¥ä¸‹æµ‹è¯•çš„éšå«å±‚çš„ç¥ç»å…ƒçš„æ•°ç›®æ˜¯ï¼š';
+string3 = 'æœ¬æ¬¡é¢„è®¾ç½®çš„è¿­ä»£æ•°ç›®æ˜¯ï¼š';
+string4 = 'åœ¨ä»¥ä¸Šé…ç½®ä¸‹ï¼Œå®éªŒé‡å¤æ¬¡æ•°ä¸ºï¼š';
+%========================é€‰æ‹©è®­ç»ƒå‡½æ•°=======================================ï¼›
+for i = 9:1:9
     result = {0};
     sheet = 1;
     num = 1;
     trainfcn = cell{i}.trainfcn;
     result{1,1} = strcat(string1,trainfcn);
-    result{1,6} = 'µü´ú´ÎÊı';
-    result{1,7} = '×îĞ¡Îó²î';
-    result{1,8} = '×îĞ¡Ìİ¶È';
-    result{1,9} = 'µü´úÍ£Ö¹µÄ´¥·¢Ïî';
+    result{1,6} = 'è¿­ä»£æ¬¡æ•°';
+    result{1,7} = 'æœ€å°è¯¯å·®';
+    result{1,8} = 'æœ€å°æ¢¯åº¦';
+    result{1,9} = 'è¿­ä»£åœæ­¢çš„è§¦å‘é¡¹';
     
-    %ÉèÖÃÒ»¸öÓÃÓÚ´æ´¢Æ½¾ùÖµµÄ¿ªÊ¼µØÖ·£¨Ôª°ûµÄµÚ¼¸ĞĞ£©,ºóÃæ»áÓÃµ½£»
+    %è®¾ç½®ä¸€ä¸ªç”¨äºå­˜å‚¨å¹³å‡å€¼çš„å¼€å§‹åœ°å€ï¼ˆå…ƒèƒçš„ç¬¬å‡ è¡Œï¼‰,åé¢ä¼šç”¨åˆ°ï¼›
         start = 10;
-        result{start,13} = 'Éñ¾­Ôª¸öÊı';
-        result{start,14} = 'µÚÒ»ÀàÆ½¾ùÖµ';
-        result{start,15} = 'µÚ¶şÀàÆ½¾ùÖµ';
-        result{start,16} = 'µÚÈıÀàÆ½¾ùÖµ';
-        result{start,17} = 'µÚËÄÀàÆ½¾ùÖµ';
-    for j = 15:1:30
+        result{start,13} = 'ç¥ç»å…ƒä¸ªæ•°';
+        result{start,14} = 'ç¬¬ä¸€ç±»å¹³å‡å€¼';
+        result{start,15} = 'ç¬¬äºŒç±»å¹³å‡å€¼';
+        result{start,16} = 'ç¬¬ä¸‰ç±»å¹³å‡å€¼';
+        result{start,17} = 'ç¬¬å››ç±»å¹³å‡å€¼';
+        
+    %======================é€‰æ‹©éšå«å±‚ç¥ç»å…ƒçš„ç»“ç‚¹æ•°==========================ï¼›
+    for j = 16:2:16
         num = num +3;
         result{num,1} = strcat(string2,num2str(j));
-         %ÉèÖÃ4¸ö±äÁ¿£¬ÓÃÓÚ´æ´¢Îå´ÎµÄ¼ÆËãºÍ£¬×îºóÓÃÓÚÇóÆ½¾ùÖµ£»
-            result1 = 0;
-            result2 = 0;
-            result3 = 0;
-            result4 = 0;
-            
-        for k = 1:1:5
-           [tr,testResult] = testNnet(j,cell{i}); 
-           num = num +1;
-           %°Ñ¼ÆËã½á¹û·ÅÈëÔª°ûÖ®ÖĞ£»
-           result{num,1} = testResult(1,1);
-           result{num,2} = testResult(1,2);
-           result{num,3} = testResult(1,3);
-           result{num,4} = testResult(1,4);
-           %°ÑÑµÁ·µÄÏà¹ØĞÅÏ¢´æ´¢ÆğÀ´£»
-           result{num,6} = tr.num_epochs;
-           result{num,7} = tr.best_perf;
-           if isfield(tr,'gradient')
-           result{num,8} = tr.gradient(1,tr.num_epochs);
-           end
-           result{num,9} = tr.stop;
-           %°Ñ¼ÆËã½á¹ûÀÛ¼ÓÆğÀ´£»
-           result1 = result1 + testResult(1,1);
-           result2 = result2 + testResult(1,2);
-           result3 = result3 + testResult(1,3);
-           result4 = result4 + testResult(1,4);
-        end
-        average1 = result1 / k;
-        average2 = result2 / k;
-        average3 = result3 / k;
-        average4 = result4 / k;
-        start = start +1;
-        result{start,13} = j;
-        result{start,14} = average1;
-        result{start,15} = average2;
-        result{start,16} = average3;
-        result{start,17} = average4;
+         
+    %===================è®¾ç½®ä¸€ä¸‹è¿­ä»£æ¬¡æ•°=====================================ï¼›
+            for epochs = 5000:50:5000
+                %è®¾ç½®4ä¸ªå˜é‡ï¼Œç”¨äºå­˜å‚¨äº”æ¬¡çš„è®¡ç®—å’Œï¼Œæœ€åç”¨äºæ±‚å¹³å‡å€¼ï¼›
+                result1 = 0;
+                result2 = 0;
+                result3 = 0;
+                result4 = 0;
+                num = num +2;
+                result{num,1} = strcat(string3,num2str(epochs));
+   %=====================è®¾ç½®æ¯ä¸€æ¬¡é‡å¤çš„æ¬¡æ•°================================ï¼›
+                repeat = 3;
+                num =num +1;
+                result{num,1} = strcat(string4,num2str(repeat));
+                
+                for k = 1:1:repeat;
+                    [tr,testResult] = testNnet(epochs,j,cell{i}); 
+                    num = num +1;
+                    %æŠŠè®¡ç®—ç»“æœæ”¾å…¥å…ƒèƒä¹‹ä¸­ï¼›
+                    result{num,1} = testResult(1,1);
+                    result{num,2} = testResult(1,2);
+                    result{num,3} = testResult(1,3);
+                    result{num,4} = testResult(1,4);
+                    %æŠŠè®­ç»ƒçš„ç›¸å…³ä¿¡æ¯å­˜å‚¨èµ·æ¥ï¼›
+                    result{num,6} = tr.num_epochs;
+                    result{num,7} = tr.best_perf;
+                    if isfield(tr,'gradient')
+                        result{num,8} = tr.gradient(1,tr.num_epochs);
+                    end
+                    result{num,9} = tr.stop;
+                    %æŠŠè®¡ç®—ç»“æœç´¯åŠ èµ·æ¥ï¼›
+                    result1 = result1 + testResult(1,1);
+                    result2 = result2 + testResult(1,2);
+                    result3 = result3 + testResult(1,3);
+                    result4 = result4 + testResult(1,4);
+                end
+                average1 = result1 / k;
+                average2 = result2 / k;
+                average3 = result3 / k;
+                average4 = result4 / k;
+                start = start +1;
+                result{start,13} = j;
+                result{start,14} = average1;
+                result{start,15} = average2;
+                result{start,16} = average3;
+                result{start,17} = average4;       
+            end
         
     end
     xlswrite('result',result,i);
 end
 
-%¹Ø±ÕCPU²¢ĞĞ´¦Àí
-matlabpool close;
+%å…³é—­CPUå¹¶è¡Œå¤„ç†
+%matlabpool close;
